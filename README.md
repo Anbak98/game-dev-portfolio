@@ -12,10 +12,10 @@
 ### 게임 "INFEST" - 친구들과 함께 시원하게 총을 쏘며 스트레스를 푸는 게임
 ### 기술 스택 : PC / Unity / Photon Fusion 2 / 멀티 플레이 네트워크
 ### 작업 개요
-- Fusion2의 NetworkBool 단일 bit 직렬화 특성을 활용하여, 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그를 효율적으로 동기화했습니다. [> 상세](./Docs/INFEST/network.md#L11)
-- 렌더 기반 Change Detection를 처리하는 OnChangeRender 콜백을 NetworkBool에 연결하여 상태 변화 시 즉시 대응함으로써, RPC 없이 단일 bit 기반의 최적화된 동기화를 구현했습니다. [> 상세](./Docs/INFEST/network.md#L15)
-- 게임 시작 투표, 레그돌, 무기 구매 등 단발성 고성능 상호작용은, 패킷 손실 가능성이 있는 입력 구조체나 다양한 파라미터를 전달할 수 없는 Change Detection(OnChangeRender) 대신, RPC를 통해 안정적으로 처리했습니다. [> 상세](./Docs/INFEST/network.md#L30)
-- Host와 Shared 토폴로지의 특성(일관성 vs 권한 분산)을 분석하여, 기획 명세에 맞게 게임 플레이와 매치메이킹에 서로 다른 토폴로지를 적용했습니다. [> 상세](./Docs/INFEST/network.md#L40)
+- Fusion2의 NetworkBool 단일 bit 직렬화 특성을 활용하여, 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그를 효율적으로 동기화했습니다. [> 상세](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
+- 렌더 기반 Change Detection를 처리하는 OnChangeRender 콜백을 NetworkBool에 연결하여 상태 변화 시 즉시 대응함으로써, RPC 없이 단일 bit 기반의 최적화된 동기화를 구현했습니다. [> 상세](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
+- 게임 시작 투표, 레그돌, 무기 구매 등 단발성 고성능 상호작용은, 패킷 손실 가능성이 있는 입력 구조체나 다양한 파라미터를 전달할 수 없는 Change Detection(OnChangeRender) 대신, RPC를 통해 안정적으로 처리했습니다. [> 상세](./Docs/INFEST/network.md#2-게임-시작-투표-상점-열람-무기-구매-등의-단발성-상호작용-함수는-rpc로-실행했습니다)
+- Host와 Shared 토폴로지의 특성(일관성 vs 권한 분산)을 분석하여, 기획 명세에 맞게 게임 플레이와 매치메이킹에 서로 다른 토폴로지를 적용했습니다. [> 상세](./Docs/INFEST/network.md#-네트워크-토폴로지---매칭과-플레이에-shared와-host의-각기-다른-토폴로지를-적용하다)
 - 비전공자 팀원과 협업하기 위해 R&D를 선행하고 기반 시스템을 구축한 뒤, 세부 작업을 팀원에게 안정적으로 인계했습니다.
 ### 작업 상세
 - [네트워크 작업 상세 보기](./Docs/INFEST/network.md)
