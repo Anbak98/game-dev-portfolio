@@ -18,6 +18,7 @@
 - Shared 토폴로지를 사용해 매치 메이킹 시스템을 구현했습니다.
 ### 작업 상세
 - [네트워크 작업 상세 보기](./Docs/INFEST/network.md)
+- [포스트모템 보고서](./Docs/INFEST/INFEST_Postmortem_Report.pdf)
 
 <br></br>
 
@@ -26,8 +27,8 @@
 
 ### 게임 "수레기 머학생" - 다양한 게임으로 순위를 경쟁하는 아케이드 게임
 ### 기술 스택 : 모바일 / Unity / 객체 지향 프로그래밍 / 리팩토링 / 프레임워크 구현 / 반응형 UI
-### 작업 상세
-- [작업 상세 보기](./Docs/TrashStudent/수레기머학생_포폴_4페이지.pdf)
+### 작업 개요
+- [작업 개요 보기](./Docs/TrashStudent/수레기머학생_포폴_4페이지.pdf)
 
 <br></br>
 
@@ -36,8 +37,9 @@
 
 ### 연구 "Artificial Hunter Vision" - 인공지능에게 눈을 주다
 ### 기술 스택 : Unity ML-Agent / Pytorch / Flask / 컴퓨터 비전 & 이미지 세그멘테이션 
-### 작업 상세
-- [작업 상세 보기](./Docs/ArtificialHunterVision/AHV_포폴.pdf)
+### 작업 개요
+- [작업 개요 보기](./Docs/ArtificialHunterVision/AHV_포폴.pdf)
+
 <br></br>
 
 # ➕ 더보기
@@ -46,6 +48,7 @@
 ### [유승민의 게임 아카이브 바로가기](https://anbak98.github.io/timeline)
 
 <br></br>
+
 --- 
 
 ![alt text](./Assets/image-3.png)
@@ -54,3 +57,9 @@
 <br></br>
 ---
 ![alt text](./Docs/Anting/anting.png)
+
+<br></br>
+---
+
+### [유승민의 블로그 바로가기](https://anbak.tistory.com/)
+### [유승민의 레딧 바로가기](https://www.reddit.com/user/Anbak98/)
