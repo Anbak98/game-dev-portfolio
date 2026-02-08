@@ -1,4 +1,6 @@
 ![인페스트 네트워크 - Photon Fusion 2](<./network.png>)
+![인페스트 네트워크 - Photon Fusion 2](<./network2.png>)
+
 
 # Photon Fusion 2
 # 🌐 네트워크 동기화 - 최소 자원으로 동기화를 꾀하다
