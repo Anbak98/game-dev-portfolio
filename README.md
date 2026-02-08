@@ -12,7 +12,6 @@
 ### 게임 "INFEST" - 친구들과 함께 시원하게 총을 쏘며 스트레스를 푸는 게임
 ### 기술 스택 : Unity / Photon Fusion 2  
 ### 작업 개요
-- 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그 동기화: 
 - 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그 동기화에는 NetworkBool과 OnChangedRender 콜백을 사용했습니다.
 - 게임 시작 투표, 상점 열람, 무기 구매 등의 단발성 상호작용 함수는 RPC로 실행했습니다.
 - Host 토폴로지를 사용해 게임 플레이 시스템을 구현했습니다.
@@ -35,6 +34,8 @@
 ### [유승민의 게임 아카이브 바로가기](https://anbak98.github.io/timeline)
 ![alt text](./image.png)
 ![alt text](./image-2.png)
+
+--- 
 
 ### [유승민의 개발 아카이브 바로가기](https://www.notion.so/native/20942be5b78c80c49a3bf0aa55328543?source=copy_link&deepLinkOpenNewTab=true)
 ![alt text](./image-3.png)
