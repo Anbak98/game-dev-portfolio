@@ -1,13 +1,9 @@
-![인페스트 네트워크 - Photon Fusion 2](<./network.png>)
-![인페스트 네트워크 - Photon Fusion 2](<./network2.png>)
-
-
-# Photon Fusion 2
+# INFEST 상세
 # 🌐 네트워크 동기화 - 최소 자원으로 동기화를 꾀하다
 Fusion 2 공식 문서에 따르면, 네트워크 속성은 NetworkBehaviour를 상속한 클래스의 자동 속성(auto-property)에 [Networked] 어트리뷰트를 추가하여 정의합니다. 이 어트리뷰트는 Fusion이 해당 속성의 getter와 setter를 네트워크 객체의 상태 메모리 버퍼와 자동으로 연결하도록 IL 코드를 생성하도록 지시합니다. 이에 따라 플레이어 HP와 같이 모든 클라이언트가 공유해서 확인해야 하는 데이터는 [Networked] 속성으로 정의하여 네트워크 상태로 관리했습니다.
 
 
-### 1. 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그 동기화에는 NetworkBool과 OnChangedRender 콜백을 사용했습니다.
+### 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그 동기화에는 NetworkBool과 OnChangedRender 콜백을 사용했습니다.
 
 
 (1) 공식 문서에 따르면 Photon Fusion 2의 NetworkBool은 C#의 bool이 플랫폼마다 크기가 일관되지 않을 수 있다는 문제를 보완하며, 단일 bit로 올바르게 직렬화됩니다. 또한 아키텍처 설명에 따르면 Fusion 2는 NetworkObject에서 변경된 데이터만 전송하는 궁극적 일관성 모델을 사용하여 전송해야 하는 데이터를 최소화합니다. 이에 저는 NetworkBool이 그 상태가 변화할 때만 1bit 크기(혹은 그에 준하는 수준)의 네트워크 전송량을 차지할 것이라 기대했으며(공식적으로 명시된 수치는 없어 확신할 수는 없었습니다), 만약 그렇다면 이는 애니메이션 트리거나 피격 여부 등 ON/OFF 성격의 상태 플래그에 대한 읽기·쓰기와 논리적으로 1:1로 대응하기에 NetworkBool이 가장 높은 수준의 최적화 선택지라고 판단했습니다. 
@@ -27,9 +23,7 @@ Fusion 2 공식 문서에 따르면, 네트워크 속성은 NetworkBehaviour를 
 > [> Eventual Consistency - 'An Eventual Consistency model is used, which minimises the data which must be transmitted, as it sends only the changes in the data, for NetworkObjects which have changed.'](https://doc.photonengine.com/ko-kr/fusion/current/manual/data-transfer/eventual-consistency)  
 > [> Change Detection - 'The OnChangedRender attribute is the easiest way for handling Render based Change Detection.'](https://doc.photonengine.com/ko-kr/fusion/current/manual/data-transfer/change-detection)  
 
-<br></br>
-
-### 2. 게임 시작 투표, 상점 열람, 무기 구매 등의 단발성 상호작용 함수는 RPC로 실행했습니다.
+### 게임 시작 투표, 상점 열람, 무기 구매 등의 단발성 상호작용 함수는 RPC로 실행했습니다.
 
 (1) 초기 설계 단계에서는 게임 시작 투표, 상점 열람, 무기 구매와 같은 클라이언트 상호작용 입력과 관련 파라미터를 NetworkInput으로 전달하고, 이를 서버(State Authority)에서 처리하는 구조를 고려했습니다. 클라이언트 입력을 서버에서 일괄 처리한 뒤, 그 결과만을 네트워크 프로퍼티에 반영한다면 RPC 사용을 최소화하면서도 동기화가 가능할 것이라 판단했기 때문입니다. 그러나 Fusion 2의 입력 구조체는 신뢰되지 않는 메시지로 전송되며, 패킷 손실이 발생할 수 있다는 점이 문제였습니다. 또한 단발성 상호작용 처리를 위해 입력 구조체를 사용하는 것이, 호출 빈도가 낮은 RPC에 비해 명확한 성능적 이점을 가진다고 판단하기도 어려웠습니다. 입력 구조체는 매 Tick 전송되는 스트림 데이터에 적합한 반면, 해당 상호작용들은 이벤트성 메시지에 가깝기 때문입니다. 이에 따라 Fusion 2에서 전송과 실행이 공식적으로 보장되는 신뢰성 높은 RPC(Reliable RPC) 를 사용해 단발성 상호작용을 처리하는 방식으로 방향성을 확립했습니다. 실제로 이후 개발 과정에서 네트워크 모니터링을 진행하며 패킷 손실이 발생하는 상황을 빈번히 확인했고, 이로 인해 게임 시작 투표와 같은 단일·일회성 상호작용의 실행을 보장할 수 없다는 한계를 확인했습니다.
 

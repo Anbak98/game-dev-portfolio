@@ -4,19 +4,30 @@
 
 ### 게임 클라이언트 개발자  
 
-"AI를 명세 기반 개발에 활용해 게임 아이디어를 빠르게 검증하고, 탄탄한 기본기와 최적화를 통해 게임의 완성도를 끌어올리는 개발자를 지향합니다" <br></br>
+"캐시 지역성 수준의 탄탄한 기본기와 최적화 기술로 게임의 완성도를 보장하고, 이를 바탕으로 AI를 활용한 명세 기반의 빠른 개발이 가능한 개발자를 지향합니다" <br></br>
 
 # 📁 PROJECT #1 
 
+### 2026.02 - 개발 중 / 1인 개발
+### 게임 "Anting" - 덱빌딩 개미 시뮬레이션
+### 기술 스택 : PC / 모바일 / Unity
+### 작업 개요
+- 10K 에이전트 규모의 대규모 연산에서 프레임 방어를 위해 캐시 지역성을 최적화. 3차원 배열을 1차원 배열로 평탄화하여 NativeArray 기반의 연속 메모리 구조를 구성, 핫 루프에서 참조 타입 사용을 최소화해 pointer chasing 최소화, interface 기반 추상화로 인한 virtual dispatch를 최소화하여 간접 분기와 캐시 미스를 줄이고 메모리 fetch 비용을 감소. 향후 DOTS 기반 ECS를 활용해 에이전트를 물리적으로 연속 배치하거나 아니면 분기 없는 데이터 중심 구조로 전환하여 GPU 기반 병렬 처리까지 확장헤 60FPS 프레임을 확보할 계획.
+- 확률 기반 의사결정 로직인 개미 군집 알고리즘의 무작위성을 시뮬레이션하며 패턴을 찾아내, 이를 파라미터 튜닝 기반의 통제 가능한 시스템으로 설계.
+- 20K 드로우 콜을 줄이기 위해 GPU Instancing 옵션을 활성화해 동일한 스프라이트들은 한 번의 드로우 콜로 렌더링하고, Sprite Atals로 여러 개의 스프라이트들을 하나의 텍스처에 몰아넣어 최종적으로 50 Batch까지 감소.
+- 친선 전투 같은 친구 기능을 구현하기 위한 사전 단계로 스팀웍스 API 적용.
 
-### 게임 "INFEST" - 친구들과 함께 시원하게 총을 쏘며 스트레스를 푸는 게임
+# 📁 PROJECT #1 
+
+### 2025.05 - 2025.06 / 5인 개발 (팀장)
+### 게임 "INFEST" - 멀티 FPS 좀비 슈터
 ### 기술 스택 : PC / Unity / Photon Fusion 2 / 멀티 플레이 네트워크
 ### 작업 개요
-- Fusion2의 NetworkBool 단일 bit 직렬화 특성을 활용하여, 애니메이션 트리거, 피격 여부 등 ON/OFF 성격의 상태 플래그를 효율적으로 동기화했습니다. [> 상세 1](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
-- 렌더 기반 Change Detection를 처리하는 OnChangeRender 콜백을 NetworkBool에 연결하여 상태 변화 시 즉시 대응함으로써, RPC 없이 단일 bit 기반의 최적화된 동기화를 구현했습니다. [> 상세 1](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
-- 게임 시작 투표, 레그돌, 무기 구매 등 단발성 고성능 상호작용은, 패킷 손실 가능성이 있는 입력 구조체나 다양한 파라미터를 전달할 수 없는 Change Detection(OnChangeRender) 대신, RPC를 통해 안정적으로 처리했습니다. [> 상세 2](./Docs/INFEST/network.md#2-게임-시작-투표-상점-열람-무기-구매-등의-단발성-상호작용-함수는-rpc로-실행했습니다)
-- Host와 Shared 토폴로지의 특성(일관성 vs 권한 분산)을 분석하여, 기획 명세에 맞게 게임 플레이와 매치메이킹에 서로 다른 토폴로지를 적용했습니다. [> 상세 3](./Docs/INFEST/network.md#-네트워크-토폴로지---매칭과-플레이에-shared와-host의-각기-다른-토폴로지를-적용하다)
-- 비경험자 팀원과 협업하기 위해 R&D를 선행하고 기반 시스템을 구축한 뒤, 세부 작업을 팀원에게 안정적으로 인계했습니다.
+- ON/OFF 성격의 상태 플래그(e.g. 애니메이션 트리거)를 최소한의 자원으로 네트워크에 동기화하기 위해 단일 bit 직렬화 특성을 가진 Fusion2 NetworkBool 변수를 활용. [상세](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
+- 렌더링을 최소한의 자원으로 동기화하기 위해 렌더 기반 Change Detection를 처리하는 OnChangeRender 콜백을 NetworkBool에 연결하여 RPC 없는 로컬 동기화를 구현. [상세](./Docs/INFEST/network.md#1-애니메이션-트리거-피격-여부-등-onoff-성격의-상태-플래그-동기화에는-networkbool과-onchangedrender-콜백을-사용했습니다)
+- 단발성 고성능 상호작용(e.g. 게임 시작 투표, 상점 이용)을 안정적으로 동기화하기 위해 패킷 손실 가능성이 있는 입력 구조체나 다양한 파라미터를 전달할 수 없는 Change Detection(OnChangeRender) 대신, 도착이 보장되는 신뢰성 있는 RPC를 통해 안정적으로 처리. [상세](./Docs/INFEST/network.md#2-게임-시작-투표-상점-열람-무기-구매-등의-단발성-상호작용-함수는-rpc로-실행했습니다)
+- 게임 플레이와 매치메이킹에서 기획 명세에 맞는 토폴로지를 적용하기 위해 Host와 Shared 토폴로지의 특성을 일관성과 권한 분산으로 분석하고 구현. [상세](./Docs/INFEST/network.md#-네트워크-토폴로지---매칭과-플레이에-shared와-host의-각기-다른-토폴로지를-적용하다)
+- 비경험자 팀원과 협업하기 위해 R&D를 선행하고 기반 시스템을 구축한 뒤, 세부 작업을 팀원에게 안정적으로 인계.
 ### 작업 상세
 - [네트워크 작업 상세 보기](./Docs/INFEST/network.md)
 - [포스트모템 보고서](./Docs/INFEST/INFEST_Postmortem_Report.pdf)
@@ -25,42 +36,32 @@
 
 # 📁 PROJECT #2
 
-
-### 게임 "수레기 머학생" - 다양한 게임으로 순위를 경쟁하는 아케이드 게임
+### 2025.07 - 2025.09 / 5인 개발 (클라이언트)
+### 게임 "수레기 머학생" - 종합 퍼즐 순위 경쟁
 ### 기술 스택 : 모바일 / Unity / 객체 지향 프로그래밍 / 리팩토링 / 프레임워크 구현 / 반응형 UI
 ### 작업 개요
+- 협업을 위해 2천 줄의 메인 게임 스크립트를 10개의 스크립트로 분리하는 단일 책임 원칙 기반 리팩토링 진행
+- 출시를 대비한 유지보수성 증진를 위해 기존의 5개 미니 게임 각각에서 따로 처리하던 승리, 보상, 기록의 핵심 기능을 하나의 프레임워크로 통합해 재사용성, 확장성, 신뢰성 확보.
+- 다양한 모바일 해상도에도 불구하고 1920*1020으로 고정되던 해상도가 화면에 빈 부븐을 만들어 옛날 게임의 느낌을 준다는 점을 개선하기 위해 기기 비율 기반으로 match 값을 조정하고, pivot·anchor 재설정 및 노치 대응, UI와 오브젝트 스케일 조정을 통해 다양한 화면 비율에서도 일관된 UX를 확보
 - [작업 개요 보기](./Docs/TrashStudent/수레기머학생_포폴_4페이지.pdf)
 
 <br></br>
 
 # 📁 PROJECT #3
 
-
-### 연구 "Artificial Hunter Vision" - 강화학습 에이전트에게 향상된 눈을 주다
+### 연구 "Artificial Hunter Vision" - 시야 기반 강화학습 에이전트
 ### 기술 스택 : Unity ML-Agent / Pytorch / Flask / 컴퓨터 비전 & 이미지 세그멘테이션 
 ### 작업 개요
+- 시야 기반 강화학습 에이전트를 구현하기 위해 Unity ML-Agent 플러그인 활용.
+- 복합 환경에서의 에이전트 성능을 향상시키기 위해 Pytorch를 활용해 Image Segmentation 모델 학습.
+- 모델 학습을 위한 데이터 확보를 위해 유니티 시뮬레이션을 반복하며 Render Texture로 이미지를 생성하고 Occlusion Culling과 Shader를 이용해 라벨 데이터 확보.
+- Unity와 Pytorch를 연결하기 위해 Flask로 통신 채널 구축.
 - [작업 개요 보기](./Docs/ArtificialHunterVision/AHV_포폴.pdf)
 
 <br></br>
 
 # ➕ 더보기
-![alt text](./Assets/image.png)
-![alt text](./Assets/image-2.png)
 ### [유승민의 게임 아카이브 바로가기](https://anbak98.github.io/timeline)
-
-<br></br>
-
---- 
-
-![alt text](./Assets/image-3.png)
 ### [유승민의 개발 아카이브 바로가기](https://www.notion.so/20942be5b78c80c49a3bf0aa55328543?source=copy_link)
-
-<br></br>
----
-![alt text](./Docs/Anting/anting.png)
-
-<br></br>
----
-
 ### [유승민의 블로그 바로가기](https://anbak.tistory.com/)
 ### [유승민의 레딧 바로가기](https://www.reddit.com/user/Anbak98/)
