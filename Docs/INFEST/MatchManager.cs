@@ -48,7 +48,6 @@ public class MatchManager : SingletonBehaviour<MatchManager>
         if (Runner != null)
             await Runner.Shutdown();
 
-        // 货肺款 Runner 积己
         var runnerGO = new GameObject("Runner (Shared)");
         Runner = runnerGO.AddComponent<NetworkRunner>();
         runnerGO.AddComponent<PlayGameListener>();
@@ -88,7 +87,6 @@ public class MatchManager : SingletonBehaviour<MatchManager>
             if (Runner != null)
                 await Runner.Shutdown();
 
-            // 货肺款 Runner 积己
             var runnerGO = new GameObject("Runner (Shared)");
             Runner = runnerGO.AddComponent<NetworkRunner>();
             runnerGO.AddComponent<PlayGameListener>();
@@ -132,7 +130,6 @@ public class MatchManager : SingletonBehaviour<MatchManager>
             if (Runner != null)
                 await Runner.Shutdown();
 
-            // 货肺款 Runner 积己
             var runnerGO = new GameObject("Runner (Single)");
             Runner = runnerGO.AddComponent<NetworkRunner>();
             runnerGO.AddComponent<PlayGameListener>();
@@ -174,7 +171,6 @@ public class MatchManager : SingletonBehaviour<MatchManager>
             if (Runner != null)
                 await Runner.Shutdown();
 
-            // 货肺款 Runner 积己
             var runnerGO = new GameObject("Runner (Single)");
             Runner = runnerGO.AddComponent<NetworkRunner>();
             runnerGO.AddComponent<PlayGameListener>();
@@ -226,7 +222,6 @@ public class MatchManager : SingletonBehaviour<MatchManager>
         if (Runner != null)
             await Runner.Shutdown();
 
-        // 货肺款 Runner 积己
         var runnerGO = new GameObject("Runner (Shared)");
         Runner = runnerGO.AddComponent<NetworkRunner>();
 
