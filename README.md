@@ -1,4 +1,4 @@
-![alt text](./Assets/profile.png)
+<!-- ![alt text](./Assets/profile.png) -->
 
 # 🧑 유승민 ( 1998.05.23 )
 
